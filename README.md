@@ -49,7 +49,11 @@ python ml_prediction.py
 
 # 3. Launch the Early Warning System
 python demo_app.py
+```
 
+## 6. Citation
+If you utilize this methodology, architecture, or codebase in your research, please cite our project:
+```bibtex
 @article{viethungha06,
   title={Asymmetric Risk Thresholding in Cost-Sensitive Random Forests for Traffic Severity Prediction},
   author={Hung, Ha Viet and Le, Thu and Nhan, Nguyen Viet and Kiet, Nguyen Thai and Nguyen, Tran Bao},
