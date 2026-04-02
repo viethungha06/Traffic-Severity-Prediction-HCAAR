@@ -136,7 +136,7 @@ def run_sql_analysis():
     """
     execute_query("--- 9. WEATHER & LIGHT CONDITIONS ---", q9, conn, "Q9_Weather_Light")
 
-    # --- 10. SPEED LIMIT ---
+    # --- 10. SPEED LIMIT --- 
     q10 = """
         SELECT 
             CASE 
