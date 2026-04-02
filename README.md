@@ -40,7 +40,7 @@ The codebase is structured to ensure full computational reproducibility:
 * `demo_app.py`: A lightweight Command-Line Interface (CLI) that requires 5 proactive inputs to trigger real-time hazard detection.
 
 ## 5. How to Run
-To replicate the findings or utilize the predictive engine, execute the pipeline in the following sequence:
+To replicate the findings or utilize the predictive engine, execute the pipeline in the following sequence: 
 
 ```bash
 # 1. Clean data and engineer features
