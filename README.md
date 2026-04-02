@@ -47,7 +47,7 @@ To replicate the findings or utilize the predictive engine, execute the pipeline
 python cleaning.py
 
 # 2. Train the Predictive Engine
-python ml_prediction.py
+python ml_training.py
 
 # 3. Analysis to find the optimal F-beta threshold
 python threshold_analysis.py
