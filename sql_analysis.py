@@ -42,7 +42,7 @@ def run_sql_analysis():
         GROUP BY "Injury Severity", Severity_Class 
         ORDER BY Total DESC;
     """
-    execute_query("--- 1. INJURY SEVERITY ---", q1, conn, "Injury_Severity")
+    execute_query("--- 1. INJURY SEVERITY ---", q1, conn, "Q1_Injury_Severity")
 
     # --- 2. SURFACE CONDITION ---
     q2 = """
@@ -51,7 +51,7 @@ def run_sql_analysis():
         GROUP BY Surface_Group 
         ORDER BY Total DESC;
     """
-    execute_query("--- 2. SURFACE CONDITION ---", q2, conn, "Surface_Condition")
+    execute_query("--- 2. SURFACE CONDITION ---", q2, conn, "Q2_Surface_Condition")
 
     # --- 3. SEVERE COLLISION TYPES (Level 3 is the highest) ---
     q3 = """
@@ -62,7 +62,7 @@ def run_sql_analysis():
         ORDER BY Severe_Cases DESC 
         LIMIT 5;
     """
-    execute_query("--- 3. SEVERE COLLISION TYPES ---", q3, conn, "Collision_Type")
+    execute_query("--- 3. SEVERE COLLISION TYPES ---", q3, conn, "Q3_Collision_Type")
 
     # --- 4. YEARLY TREND (Level 3 updated) ---
     q4 = """
@@ -72,7 +72,7 @@ def run_sql_analysis():
         GROUP BY Year 
         ORDER BY Year ASC;
     """
-    execute_query("--- 4. YEARLY TREND ---", q4, conn, "Yearly_Trend")
+    execute_query("--- 4. YEARLY TREND ---", q4, conn, "Q4_Yearly_Trend")
 
     # --- 5. DAY VS NIGHT ---
     q5 = """
@@ -86,7 +86,7 @@ def run_sql_analysis():
         FROM accidents 
         GROUP BY Period;
     """
-    execute_query("--- 5. DAY VS NIGHT ---", q5, conn, "Day_Night")
+    execute_query("--- 5. DAY VS NIGHT ---", q5, conn, "Q5_Day_Night")
 
     # --- 6. LICENSE STATE ---
     q6 = """
@@ -98,7 +98,7 @@ def run_sql_analysis():
         ORDER BY Total DESC 
         LIMIT 10;
     """
-    execute_query("--- 6. LICENSE STATE ---", q6, conn, "License_State")
+    execute_query("--- 6. LICENSE STATE ---", q6, conn, "Q6_License_State")
 
     # --- 7. HIGH-RISK TIME SLOTS ---
     q7 = """
@@ -108,7 +108,7 @@ def run_sql_analysis():
         ORDER BY Total DESC 
         LIMIT 10;
     """
-    execute_query("--- 7. HIGH-RISK TIME SLOTS ---", q7, conn, "Time_Slots")
+    execute_query("--- 7. HIGH-RISK TIME SLOTS ---", q7, conn, "Q7_Time_Slots")
 
     # --- 8. HIGH-RISK ROUTE TYPES ---
     q8 = """
@@ -120,7 +120,7 @@ def run_sql_analysis():
         ORDER BY Total DESC 
         LIMIT 10;
     """
-    execute_query("--- 8. HIGH-RISK ROUTE TYPES ---", q8, conn, "Route_Type")
+    execute_query("--- 8. HIGH-RISK ROUTE TYPES ---", q8, conn, "Q8_Route_Type")
 
     # --- 9. WEATHER & LIGHT CONDITIONS ---
     q9 = """
@@ -134,7 +134,7 @@ def run_sql_analysis():
         ORDER BY Avg_Severity DESC 
         LIMIT 10;
     """
-    execute_query("--- 9. WEATHER & LIGHT CONDITIONS ---", q9, conn, "Weather_Light")
+    execute_query("--- 9. WEATHER & LIGHT CONDITIONS ---", q9, conn, "Q9_Weather_Light")
 
     # --- 10. SPEED LIMIT ---
     q10 = """

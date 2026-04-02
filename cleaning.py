@@ -6,7 +6,6 @@ warnings.filterwarnings('ignore')
 
 def clean_traffic_data(input_path='dataset.csv', output_path='output/cleaned_dataset.csv'):
     print(f"[*] Reading raw data from: {input_path}...")
-    
     # Step 1: Read CSV file
     try:
         df = pd.read_csv(
