@@ -1,6 +1,6 @@
 # H-CAAR: Traffic Accident Severity Prediction Pipeline
 
-This repository contains the source code, data processing scripts, and predictive models for our research paper: **"Asymmetric Risk Thresholding in Cost-Sensitive Random Forests for Traffic Severity Prediction"**.
+This repository contains the source code, data processing scripts, and predictive models for our research paper: **"Asymmetric Risk Thresholding in Cost-Sensitive Random Forests for Proactive Traffic Hazard Warning"**.
 
 ## 1. The Core Problem: The Accuracy Paradox
 Traffic accident datasets inherently suffer from extreme class imbalance (e.g., Safe outcomes outnumber Fatalities by 90:1). During our baseline testing, we encountered a severe "Accuracy Paradox": standard symmetric algorithms like Support Vector Machine (SVM) achieved the highest global accuracy (82.17%) but completely failed to detect severe accidents (Class 3 Recall = 0.00%). 
@@ -18,9 +18,9 @@ Instead of using synthetic oversampling (like SMOTE) which introduces epistemic 
 
 ### Asymmetric Risk Override Mechanism (Decision Theory)
 Standard ensembles natively converge toward the conditional mean (0.5 threshold). We mathematically bypassed this using an inference-time override mechanism. 
-* We bounded the operational socioeconomic cost of a missed fatality (False Negative) versus a wasted patrol dispatch (False Positive) at a ratio of `13.3 : 1`.
-* Substituting this utility ratio into our expected cost equation yields an optimal decision boundary of **`τ = 7.0%`**.
-* **Result:** If the predicted probability of a fatality exceeds just 7.0%, the system overrides the "Safe" majority vote and triggers a localized hazard warning. This asymmetric logic drastically amplifies severe-event recall to approximately 84% (a 13-fold improvement over the baseline).
+* We derived the optimal decision threshold empirically via $F_5$-score optimization ($\beta=5.0$), weighting recall 5 times more heavily than precision
+* Substituting this utility ratio into our expected cost equation yields an optimal decision boundary of **`τ = 6.0%`**.
+* **Result:** If the predicted probability of a fatality exceeds just 6.0%, the system overrides the "Safe" majority vote and triggers a localized hazard warning. This asymmetric logic drastically amplifies severe-event recall to approximately 57.00% (a 13-fold improvement over the baseline).
 
 ## 3. System Architecture
 
@@ -46,8 +46,10 @@ python cleaning.py
 
 # 2. Train the Predictive Engine
 python ml_prediction.py
+# 3. Analysis to find the optimal F-beta threshold
+python Threshold_analysis.py
 
-# 3. Launch the Early Warning System
+# 4. Launch the Early Warning System
 python demo_app.py
 ```
 
