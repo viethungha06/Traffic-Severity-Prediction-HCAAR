@@ -20,7 +20,7 @@ Instead of using synthetic oversampling (like SMOTE) which introduces epistemic 
 Standard ensembles natively converge toward the conditional mean (0.5 threshold). We mathematically bypassed this using an inference-time override mechanism. 
 * We derived the optimal decision threshold empirically via $F_5$-score optimization ($\beta=5.0$), weighting recall 5 times more heavily than precision
 * Substituting this utility ratio into our expected cost equation yields an optimal decision boundary of **`τ = 6.0%`**.
-* **Result:** If the predicted probability of a fatality exceeds just 6.0%, the system overrides the "Safe" majority vote and triggers a localized hazard warning. This asymmetric logic drastically amplifies severe-event recall to approximately 57.00% (a 13-fold improvement over the baseline).
+* **Result:** If the predicted probability of a fatality exceeds just 6.0%, the system overrides the "Safe" majority vote and triggers a localized hazard warning. This asymmetric logic drastically amplifies severe-event recall to approximately 57.00% (a 9-fold improvement over the baseline).
 
 ## 3. System Architecture
 
@@ -33,6 +33,8 @@ The codebase is structured to ensure full computational reproducibility:
 * `sql_analysis.py`: Extracts macroscopic statistical insights and temporal risk patterns.
 * `eda_analysis.py`: Generates correlation matrices and K-Means clustering visualizations.
 * `traffic_heatmap.py`: Renders interactive thermal density maps of severe incidents.
+* threshold_analysis.py: Performs an F-beta sweep across candidate thresholds to empirically identify the optimal decision boundary.
+* full_pipeline_eval.py: Provides a comprehensive evaluation and side-by-side confusion matrix comparison between different operational thresholds.
 * `model_comparison.py`: Evaluates baseline algorithms and mathematically exposes the Accuracy Paradox.
 * `ml_prediction.py`: Trains the core Cost-Sensitive Random Forest model using the customized weight matrix.
 * `demo_app.py`: A lightweight Command-Line Interface (CLI) that requires 5 proactive inputs to trigger real-time hazard detection.
@@ -48,7 +50,7 @@ python cleaning.py
 python ml_prediction.py
 
 # 3. Analysis to find the optimal F-beta threshold
-python Threshold_analysis.py
+python threshold_analysis.py
 
 # 4. Launch the Early Warning System
 python demo_app.py
