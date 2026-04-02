@@ -94,7 +94,7 @@ def predict_m1_severity(model, model_columns):
     print(f"  Class 2 (Moderate risk) : {p[1]*100:.1f}%")
     print(f"  Class 3 (High risk)     : {p[2]*100:.1f}%")
     print("="*65 + "\n")
-
+ 
 if __name__ == "__main__":
     # Step 7: Load model then run prediction loop
     model, model_columns = load_model()
