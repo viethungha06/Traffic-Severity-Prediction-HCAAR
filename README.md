@@ -1,6 +1,6 @@
 # H-CAAR: Traffic Accident Severity Prediction Pipeline
 
-This repository contains the source code, data processing scripts, and predictive models for our research paper: **"Asymmetric Risk Thresholding in Cost-Sensitive Random Forests for Proactive Traffic Hazard Warning"**.
+This repository contains the source code, data processing scripts, and predictive models for our research paper: **"Asymmetric Risk Thresholding in Cost-Sensitive Random Forests for Traffic Severity Prediction"**.
 
 ## 1. The Core Problem: The Accuracy Paradox
 Traffic accident datasets inherently suffer from extreme class imbalance (e.g., Safe outcomes outnumber Fatalities by 90:1). During our baseline testing, we encountered a severe "Accuracy Paradox": standard symmetric algorithms like Support Vector Machine (SVM) achieved the highest global accuracy (82.17%) but completely failed to detect severe accidents (Class 3 Recall = 0.00%). 
