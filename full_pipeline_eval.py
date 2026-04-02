@@ -156,7 +156,7 @@ def print_summary_table(y_test, all_preds, thresholds, labels):
 
     print(f"{'='*80}")
     print("\nC3 Missed = actual severe/fatal cases that did NOT trigger any alert")
-
+ 
 
 def main():
     print("\n" + "="*70)
