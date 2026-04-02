@@ -36,7 +36,7 @@ The codebase is structured to ensure full computational reproducibility:
 * threshold_analysis.py: Performs an F-beta sweep across candidate thresholds to empirically identify the optimal decision boundary.
 * full_pipeline_eval.py: Provides a comprehensive evaluation and side-by-side confusion matrix comparison between different operational thresholds.
 * `model_comparison.py`: Evaluates baseline algorithms and mathematically exposes the Accuracy Paradox.
-* `ml_prediction.py`: Trains the core Cost-Sensitive Random Forest model using the customized weight matrix.
+* `ml_training.py`: Trains the core Cost-Sensitive Random Forest model using the customized weight matrix.
 * `demo_app.py`: A lightweight Command-Line Interface (CLI) that requires 5 proactive inputs to trigger real-time hazard detection.
 
 ## 5. How to Run
