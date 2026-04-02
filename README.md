@@ -24,7 +24,7 @@ Standard ensembles natively converge toward the conditional mean (0.5 threshold)
 
 ## 3. System Architecture
 
-<img width="6000" height="3375" alt="pipeline" src="https://drive.google.com/file/d/176gijCGOJXSaNg0ABPJwlxWrTktPocg6/view?usp=sharing" />
+<img width="6000" height="3375" alt="pipeline" src="https://github.com/user-attachments/assets/f0278ee8-2653-4ec5-b423-8275b4868e79" />
 
 ## 4. Repository Structure
 The codebase is structured to ensure full computational reproducibility:
