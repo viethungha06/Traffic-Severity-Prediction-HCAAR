@@ -262,7 +262,7 @@ def main():
     if not os.path.exists(CSV_PATH):
         print("[!] cleaned_dataset.csv not found. Run cleaning.py first.")
         return
-    if not os.path.exists(MODEL_PATH):
+    if not os.path.exists(MODEL_PATH): 
         print("[!] rf_model_m1.pkl not found. Run ml_prediction.py first.")
         return
 
