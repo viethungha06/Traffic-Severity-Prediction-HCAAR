@@ -19,69 +19,81 @@ def load_model():
 
 # Step 2: Collect user input and run prediction
 def predict_m1_severity(model, model_columns):
-    print("\n" + "="*70)
-    print(" 🚨 PROACTIVE ACCIDENT RISK WARNING SYSTEM (H-CAAR) 🚨")
-    print("="*70)
-    print("Enter SPATIOTEMPORAL & ENVIRONMENTAL conditions for patrol area:\n")
+    print("\n" + "="*65)
+    print(" ACCIDENT RISK WARNING SYSTEM ")
+    print("="*65)
+    print("Please enter the context (Time - Environment - Location - Driver):\n")
 
-    speed      = float(input("1. [Location] Speed limit (e.g. 30, 50, 70) : ") or 50)
-    hour       = int(input("2. [Time]     Hour of day 0-23 (e.g. 2, 14) : ") or 14)
-    is_weekend = int(input("3. [Time]     Weekend? (1: Yes, 0: No)      : ") or 0)
-    weather    = input("4. [Weather]  Condition (CLEAR, RAIN, EXTREME): ").upper() or "CLEAR"
-    surface    = input("5. [Surface]  Condition (DRY, WET, ICE_SNOW)  : ").upper() or "DRY"
-    vehicle_group = input("6. [Vehicle_Group]  Vehicle (Car, Motorcycle, Truck)  : ") or "Car"
+    speed        = float(input("1.  [Location]    Speed limit (e.g. 30, 50, 70)                      : ") or 50)
+    hour         = int(input("2.  [Time]        Hour of day 0-23 (e.g. 14)                         : ") or 14)
+    is_weekend   = int(input("3.  [Time]        Weekend? (1: Yes, 0: No)                           : ") or 0)
 
+    weather      = input("4.  [Environment] Weather     (e.g. CLEAR, RAIN, EXTREME)            : ").upper() or "CLEAR"
+    light        = input("5.  [Environment] Light       (e.g. DAYLIGHT, DARK)                  : ").upper() or "DAYLIGHT"
+    surface      = input("6.  [Environment] Surface     (e.g. DRY, WET, ICE_SNOW)              : ").upper() or "DRY"
+
+    route        = input("7.  [Location]    Route type  (e.g. County, Maryland)                : ") or "UNKNOWN"
+    collision    = input("8.  [Collision]   Collision type (e.g. HEAD ON, REAR END)            : ").upper() or "UNKNOWN"
+    vehicle      = input("9.  [Vehicle]     Vehicle group (e.g. Car, Motorcycle, Truck)        : ") or "Car"
+    traffic_ctrl = input("10. [Infrastructure] Traffic control (e.g. TRAFFIC SIGNAL, STOP SIGN): ").upper() or "NO CONTROLS"
+    movement     = input("11. [Vehicle]     Movement    (e.g. MOVING CONSTANT SPEED)           : ").upper() or "UNKNOWN"
+
+    is_impaired  = int(input("12. [Driver]      Impaired (alcohol/substance)? (1: Yes, 0: No)      : ") or 0)
+    is_distracted= int(input("13. [Driver]      Distracted? (1: Yes, 0: No)                        : ") or 0)
+
+    # Step 3: Package input data with correct column names
     input_data = {
         'Hour'             : hour,
         'Is_Weekend'       : is_weekend,
         'Weather_Group'    : weather,
+        'Light'            : light,
         'Surface_Group'    : surface,
+        'Route Type'       : route,
         'Speed Limit'      : speed,
-        'Vehicle_Group'    : vehicle_group,              
-
-        'Light'            : 'DARK' if (hour < 6 or hour > 18) else 'DAYLIGHT', 
-        'Route Type'       : 'MARYLAND (STATE)', 
-        'Collision Type'   : 'UNKNOWN',          
-        'Traffic Control'  : 'NO CONTROLS',
-        'Vehicle Movement' : 'MOVING CONSTANT SPEED',
-        'Is_Impaired'      : 0,  
-        'Is_Distracted'    : 0,
+        'Collision Type'   : collision,
+        'Vehicle_Group'    : vehicle,
+        'Traffic Control'  : traffic_ctrl,
+        'Vehicle Movement' : movement,
+        'Is_Impaired'      : is_impaired,
+        'Is_Distracted'    : is_distracted,
     }
 
-    # Step 3 & 4: Encode and align columns
+    # Step 4: Encode and align columns to match training schema
     input_df      = pd.DataFrame([input_data])
     input_encoded = pd.get_dummies(input_df)
     input_aligned = input_encoded.reindex(columns=model_columns, fill_value=0)
 
-    # Step 5: Run prediction
+    # Step 5: Run prediction and extract probabilities
     raw_prediction = model.predict(input_aligned)[0]
     probabilities  = model.predict_proba(input_aligned)[0]
 
     p = list(probabilities)
-    while len(p) < 3: p.append(0.0)
+    while len(p) < 3:
+        p.append(0.0)
+
     prob_severe_pct = p[2] * 100
 
     # Step 6: Display prediction result
-    print("\n" + "-"*70)
-    print(" 📊 PREDICTION RESULT & DECISION OVERRIDE")
-    print("-"  *70)
+    print("\n" + "-"*65)
+    print(" PREDICTION RESULT & ANALYSIS")
+    print("-"*65)
 
-    if prob_severe_pct >= 7.0:
-        print(f"🛑 RED ALERT TRIGGERED: High risk of severe/fatal injury ({prob_severe_pct:.1f}%)!")
-        print("   -> Probability exceeds the 7.0% utility threshold.")
-        print("   -> ACTION: Dispatch preventative highway patrol to this corridor.")
+    if prob_severe_pct >= 6.0:
+        print(f"RED ALERT: High risk of severe injury ({prob_severe_pct:.1f}%)!")
+        print("Probability of a dangerous accident has reached 6% threshold — PRIORITY ACTION RECOMMENDED.")
     else:
-        print(f"✅ NOMINAL CONDITIONS: Severe risk is low ({prob_severe_pct:.1f}% < 7.0% threshold).")
         if raw_prediction == 1:
-            print("   -> Default Model Output: CLASS 1 (Safe / Property damage only)")
+            print("RESULT: CLASS 1 (Low risk — mainly property damage)")
+        elif raw_prediction == 2:
+            print("RESULT: CLASS 2 (Moderate risk — possible minor/moderate injury)")
         else:
-            print("   -> Default Model Output: CLASS 2 (Moderate risk)")
+            print("RESULT: CLASS 3 (High risk — severe injury)")
 
-    print(f"\n[Raw Probability Matrix]")
-    print(f"  Class 1 (Safe)      : {p[0]*100:.1f}%")
-    print(f"  Class 2 (Moderate)  : {p[1]*100:.1f}%")
-    print(f"  Class 3 (Fatal)     : {p[2]*100:.1f}%")
-    print("="*70 + "\n")
+    print(f"\n[Detailed probability breakdown]")
+    print(f"  Class 1 (Low risk)      : {p[0]*100:.1f}%")
+    print(f"  Class 2 (Moderate risk) : {p[1]*100:.1f}%")
+    print(f"  Class 3 (High risk)     : {p[2]*100:.1f}%")
+    print("="*65 + "\n")
 
 if __name__ == "__main__":
     # Step 7: Load model then run prediction loop
