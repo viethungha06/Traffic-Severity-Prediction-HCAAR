@@ -161,7 +161,7 @@ def clean_traffic_data(input_path='dataset.csv', output_path='output/cleaned_dat
             df_clean['Latitude'].between(LAT_MIN, LAT_MAX) & 
             df_clean['Longitude'].between(LON_MIN, LON_MAX)
         ]    
-
+ 
     # Step 17: Cast categorical columns to category dtype
     cat_columns = ['Weather_Group', 'Surface_Group', 'Light', 'Traffic Control', 'Time_of_Day', 'Vehicle_Group']
     for col in cat_columns:
